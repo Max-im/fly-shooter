@@ -1,0 +1,16 @@
+{
+  "name": "shoot-fly",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx parcel index.html"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "parcel": "^2.8.2",
+    "typescript": "^4.9.4"
+  }
+}
