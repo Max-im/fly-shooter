@@ -4,7 +4,7 @@ import { IDrawable } from "./types/Drawable";
 export class UI implements IDrawable {
     game: Game;
     fontSize = 25;
-    fontFamily = 'Helvetica';
+    fontFamily = 'Bangers';
     color = 'yellow';
 
     constructor(game: Game) {

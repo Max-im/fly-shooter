@@ -31,6 +31,12 @@ export class Player extends Sprite implements IDrawable {
         else if (this.game.keys.includes('ArrowDown')) this.speedY = this.maxSpeed;
         else this.speedY = 0;
         this.y += this.speedY;
+
+        const bottomBorder = this.game.height - this.height * 0.5;
+        const topBorder = -this.height * 0.5;
+        if (this.y > bottomBorder) this.y = bottomBorder; 
+        else if (this.y < topBorder) this.y = topBorder; 
+        
         this.bullets.forEach(bullet => bullet.update());
         this.bullets = this.bullets.filter(bullet => !bullet.markForDelete);
         this.updateSprite();
