@@ -17,6 +17,9 @@ export class Game implements IDrawable {
   control: Control;
   ui: UI;
 
+  gameTime = 0;
+  timeLimit = 5000;
+
   ammo = 20;
   maxAmmo = 50;
   ammoTimer = 0;
@@ -40,6 +43,8 @@ export class Game implements IDrawable {
   }
 
   update(deltaTime: number) {
+    if(!this.gameOver) this.gameTime += deltaTime;
+    if(this.gameTime > this.timeLimit) this.gameOver = true;
     this.ctx.fillStyle = '#4d79bc';
     this.ctx.fillRect(0, 0, this.width, this.height);
     this.player.update();
@@ -60,7 +65,7 @@ export class Game implements IDrawable {
                 enemy.lives--;
                 if (enemy.lives <= 0) {
                     enemy.markedForDelete = true;
-                    this.score += enemy.score;
+                    if(!this.gameOver) this.score += enemy.score;
                     if (this.winningScore < this.score) this.gameOver = true;
                 }
                 bullet.markForDelete = true;

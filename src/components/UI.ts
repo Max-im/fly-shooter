@@ -26,6 +26,10 @@ export class UI implements IDrawable {
             ctx.fillRect(20 + 5 * i, 50, 3, 20);
         }
 
+        ctx.fillStyle = 'white';
+        const formattedTime = (this.game.gameTime * 0.001).toFixed(1);
+        ctx.fillText('Timer: ' + formattedTime, 20, 100);
+
         if (this.game.gameOver) {
             ctx.textAlign = 'center';
             let title = 'You Lost!';
