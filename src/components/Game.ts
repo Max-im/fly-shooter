@@ -9,6 +9,10 @@ export class Game {
     player: Player;
     keys: string[] = [];
     control: Control;
+    ammo = 20;
+    maxAmmo = 50;
+    ammoTimer = 0;
+    ammoInterval = 500;
 
     constructor () {
         this.canvas = <HTMLCanvasElement>document.getElementById('canvas');
@@ -20,10 +24,16 @@ export class Game {
         this.control = new Control(this);
     }
 
-    update() {
+    update(deltaTime: number) {
         this.ctx.fillStyle = '#4d79bc';
         this.ctx.fillRect(0, 0, this.width, this.height);
         this.player.update();
+        if (this.ammoTimer > this.ammoInterval) {
+            if (this.ammo < this.maxAmmo) this.ammo++; 
+            this.ammoTimer = 0;
+        } else {
+            this.ammoTimer += deltaTime;
+        }
     }
 
     draw() {

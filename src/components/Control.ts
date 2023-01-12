@@ -2,7 +2,7 @@ import { Game } from "./Game";
 
 export class Control {
     game: Game;
-    private controlKeys = ['ArrowUp', 'ArrowDown'];
+    private controlKeys = ['ArrowUp', 'ArrowDown', ' '];
 
     constructor(game: Game) {
         this.game = game;
