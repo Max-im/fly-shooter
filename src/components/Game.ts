@@ -18,9 +18,10 @@ export class Game implements IDrawable {
   control: Control;
   ui: UI;
   background: Background;
+  debug = false;
 
   gameTime = 0;
-  timeLimit = 5000;
+  timeLimit = 5000000;
   speed = 1;
 
   ammo = 20;

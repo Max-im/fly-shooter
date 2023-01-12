@@ -12,6 +12,7 @@ export class Control {
                 this.game.keys.push(e.key);
             } 
             if (this.shootKey === e.key) this.game.player.shoot();
+            if (e.key === 'd') this.game.debug = !this.game.debug;
         });
 
         window.addEventListener('keyup', e => {
