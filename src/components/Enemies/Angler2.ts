@@ -1,14 +1,14 @@
 import { Game } from "components/Game";
 import { Enemy } from "./Enemy";
 
-export class Angler1 extends Enemy {
+export class Angler2 extends Enemy {
     y: number;
-    width = 228;
-    height = 169;
-    score = 2;
-    lives = 2;
-    image = <HTMLImageElement>document.getElementById('angler1');
-    frameY = Math.floor(Math.random() * 3);
+    width = 213;
+    height = 165;
+    score = 3;
+    lives = 3;
+    image = <HTMLImageElement>document.getElementById('angler2');
+    frameY = Math.floor(Math.random() * 2);
     maxFrame = 37;
 
     constructor(game: Game) {

@@ -28,7 +28,7 @@ export abstract class Enemy extends Sprite implements IDrawable, IUpdatable {
     }
 
     update() {
-        this.x += this.speedX;
+        this.x += this.speedX - this.game.speed;
         if (this.x + this.width < 0) this.markedForDelete = true;
         this.updateSprite();
     }

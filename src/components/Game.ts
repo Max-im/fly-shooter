@@ -1,6 +1,7 @@
 import { Background } from './Background';
 import { Control } from './Control';
 import { Angler1 } from './Enemies/Angler1';
+import { Angler2 } from './Enemies/Angler2';
 import { Enemy } from './Enemies/Enemy';
 import { Player } from './Player';
 import { IDrawable } from './types/Drawable';
@@ -100,7 +101,8 @@ export class Game implements IDrawable {
   }
 
   private addEnemy() {
-    this.enemies.push(new Angler1(this));
+    if (Math.random() > 0.5) this.enemies.push(new Angler1(this));
+    else this.enemies.push(new Angler2(this))
   }
 
   private checkCollistions(rect1: any, rect2: any): boolean {
