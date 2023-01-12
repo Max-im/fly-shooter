@@ -1,4 +1,6 @@
 import { Control } from "./Control";
+import { Angler1 } from "./Enemies/Angler1";
+import { Enemy } from "./Enemies/Enemy";
 import { Player } from "./Player";
 import { UI } from "./UI";
 
@@ -8,13 +10,20 @@ export class Game {
     canvas: HTMLCanvasElement;
     ctx: CanvasRenderingContext2D;
     keys: string[] = [];
+    enemies: Enemy[] = [];
     player: Player;
     control: Control;
     ui: UI;
+    
     ammo = 20;
     maxAmmo = 50;
     ammoTimer = 0;
     ammoInterval = 500;
+
+    enemyInterval = 1000;
+    enemyTimer = 0;
+
+    gameOver = false;
 
     constructor () {
         this.canvas = <HTMLCanvasElement>document.getElementById('canvas');
@@ -37,12 +46,25 @@ export class Game {
         } else {
             this.ammoTimer += deltaTime;
         }
+        this.enemies.forEach(enemy => enemy.update());
+        this.enemies = this.enemies.filter(enemy => !enemy.markedForDelete);
+        if (this.enemyTimer > this.enemyInterval && !this.gameOver) {
+            this.addEnemy();
+            this.enemyTimer = 0;
+        } else {
+            this.enemyTimer += deltaTime;
+        }
     }
 
     draw() {
         this.player.draw();
         this.ui.draw();
+        this.enemies.forEach(enemy => enemy.draw());
     }
 
 
+    addEnemy() {
+        this.enemies.push(new Angler1(this));
+        console.log(this.enemies);
+    }
 }
