@@ -10,6 +10,7 @@ export class Angler1 extends Enemy {
     image = <HTMLImageElement>document.getElementById('angler1');
     frameY = Math.floor(Math.random() * 3);
     maxFrame = 37;
+    type = 'angler1';
 
     constructor(game: Game) {
         super(game);

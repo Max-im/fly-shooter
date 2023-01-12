@@ -21,7 +21,7 @@ export class UI implements IDrawable {
         ctx.shadowColor = 'black';
         ctx.fillText('Score: ' + this.game.score, 20, 40);
 
-        ctx.fillStyle = this.color;
+        ctx.fillStyle = this.game.player.powerUp ? this.color : 'white';
         for(let i = 0; i < this.game.ammo; i++) {
             ctx.fillRect(20 + 5 * i, 50, 3, 20);
         }

@@ -55,7 +55,8 @@ export class Game implements IDrawable {
     this.ctx.fillStyle = '#4d79bc';
     this.ctx.fillRect(0, 0, this.width, this.height);
     this.background.update();
-    this.player.update();
+    this.player.update(deltaTime);
+    
     if (this.ammoTimer > this.ammoInterval) {
       if (this.ammo < this.maxAmmo) this.ammo++;
       this.ammoTimer = 0;
@@ -67,6 +68,8 @@ export class Game implements IDrawable {
         enemy.update();
         if (this.checkCollistions(this.player, enemy)) {
             enemy.markedForDelete = true;
+            if (enemy.type === 'lucky') this.player.enterPowerUp();
+            else this.score--;
         }
         this.player.bullets.forEach(bullet => {
             if(this.checkCollistions(bullet, enemy)) {

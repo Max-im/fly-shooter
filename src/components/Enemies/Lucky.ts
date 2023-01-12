@@ -10,6 +10,7 @@ export class Lucky extends Enemy {
     image = <HTMLImageElement>document.getElementById('lucky');
     frameY = Math.floor(Math.random() * 2);
     maxFrame = 37;
+    type = 'lucky';
 
     constructor(game: Game) {
         super(game);

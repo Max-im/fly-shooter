@@ -4,7 +4,7 @@ import { IDrawable } from "./types/Drawable";
 import { IUpdatable } from "./types/Updatable";
 import { Sprite } from "./Sprite";
 
-export class Player extends Sprite implements IDrawable, IUpdatable{
+export class Player extends Sprite implements IDrawable {
     game: Game;
     width = 120;
     height = 190;
@@ -16,15 +16,17 @@ export class Player extends Sprite implements IDrawable, IUpdatable{
     speedY = 0;
     maxSpeed = 3;
     bullets: Bullet[] = [];
-    image: HTMLImageElement
+    image = <HTMLImageElement>document.getElementById('player');
+    powerUp = false;
+    powerUpTimer = 0;
+    powerUpLimit = 5000;
 
     constructor(game: Game) {
         super();
         this.game = game;
-        this.image = <HTMLImageElement>document.getElementById('player');
     } 
 
-    update() {
+    update(deltaTime: number) {
         if (this.game.keys.includes('ArrowUp')) this.speedY = -this.maxSpeed;
         else if (this.game.keys.includes('ArrowDown')) this.speedY = this.maxSpeed;
         else this.speedY = 0;
@@ -32,17 +34,41 @@ export class Player extends Sprite implements IDrawable, IUpdatable{
         this.bullets.forEach(bullet => bullet.update());
         this.bullets = this.bullets.filter(bullet => !bullet.markForDelete);
         this.updateSprite();
+        if (this.powerUp) {
+            if (this.powerUpTimer > this.powerUpLimit) {
+                this.powerUpTimer = 0;
+                this.powerUp = false;
+                this.frameX = 0
+            } else {
+                this.powerUpTimer += deltaTime;
+                this.frameY = 1;
+                this.game.ammo += 0.1;
+            }
+        }
     }
 
     draw() {
-        this.drawSprite();
         this.bullets.forEach(bullet => bullet.draw());
+        this.drawSprite();
     }
 
     shoot() {
         if (this.game.ammo > 0) {
-            this.bullets.push(new Bullet(this.game, this.x + 100, this.y + 33));
+            this.bullets.push(new Bullet(this.game, this.x + 90, this.y + 33));
             this.game.ammo--;
         }
+        if (this.powerUp) this.bottomShoot();
+    }
+
+    private bottomShoot() {
+        if (this.game.ammo > 0) {
+            this.bullets.push(new Bullet(this.game, this.x + 90, this.y + 175));
+            this.game.ammo--;
+        }
+    }
+
+    enterPowerUp() {
+        this.powerUp = true;
+        this.powerUpTimer = 0;
     }
 }

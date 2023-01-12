@@ -19,6 +19,7 @@ export abstract class Enemy extends Sprite implements IDrawable, IUpdatable {
     abstract width: number;
     abstract height: number;
     abstract image: HTMLImageElement;
+    abstract type: string;
     
     constructor(game: Game) {
         super();
