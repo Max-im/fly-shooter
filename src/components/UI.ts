@@ -42,9 +42,9 @@ export class UI implements IDrawable {
 
             ctx.fillStyle = 'white';
             ctx.font = '50px ' + this.fontFamily;
-            ctx.fillText(title, this.game.width * 0.5, this.game.height * 0.5 - 20);
+            ctx.fillText(title, this.game.width * 0.5, this.game.height * 0.5 - 30);
             ctx.font = '25px ' + this.fontFamily;
-            ctx.fillText(subtitle, this.game.width * 0.5, this.game.height * 0.5 + 20);
+            ctx.fillText(subtitle, this.game.width * 0.5, this.game.height * 0.5 + 30);
         }
         ctx.restore();
     }

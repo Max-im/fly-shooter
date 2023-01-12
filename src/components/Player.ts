@@ -2,8 +2,9 @@ import { Game } from "./Game";
 import { Bullet } from "./Bullet";
 import { IDrawable } from "./types/Drawable";
 import { IUpdatable } from "./types/Updatable";
+import { Sprite } from "./Sprite";
 
-export class Player implements IDrawable, IUpdatable{
+export class Player extends Sprite implements IDrawable, IUpdatable{
     game: Game;
     width = 120;
     height = 190;
@@ -18,6 +19,7 @@ export class Player implements IDrawable, IUpdatable{
     image: HTMLImageElement
 
     constructor(game: Game) {
+        super();
         this.game = game;
         this.image = <HTMLImageElement>document.getElementById('player');
     } 
@@ -29,26 +31,11 @@ export class Player implements IDrawable, IUpdatable{
         this.y += this.speedY;
         this.bullets.forEach(bullet => bullet.update());
         this.bullets = this.bullets.filter(bullet => !bullet.markForDelete);
-        if (this.frameX < this.maxFrame) {
-            this.frameX++;
-        } else {
-            this.frameX = 0;
-        }
+        this.updateSprite();
     }
 
     draw() {
-        this.game.ctx.drawImage(
-            this.image, 
-            this.frameX * this.width,
-            this.frameY * this.height,
-            this.width,
-            this.height,
-            this.x, 
-            this.y, 
-            this.width, 
-            this.height
-        );
-        if(this.game.debug) this.game.ctx.strokeRect(this.x, this.y, this.width, this.height);
+        this.drawSprite();
         this.bullets.forEach(bullet => bullet.draw());
     }
 

@@ -94,8 +94,8 @@ export class Game implements IDrawable {
   draw() {
     this.background.draw();
     this.player.draw();
-    this.ui.draw();
     this.enemies.forEach((enemy) => enemy.draw());
+    this.ui.draw();
     this.background.postDraw();
   }
 
