@@ -8,6 +8,7 @@ export class Bullet {
     height = 3;
     speed = 3;
     markForDelete = false;
+    image = <HTMLImageElement>document.getElementById('bullet');
 
     constructor(game: Game, x: number, y: number) {
         this.game = game;
@@ -22,7 +23,6 @@ export class Bullet {
     }
 
     draw() {
-        this.game.ctx.fillStyle = 'yellow';
-        this.game.ctx.fillRect(this.x, this.y, this.width, this.height);
+        this.game.ctx.drawImage(this.image, this.x, this.y)
     }
 }
