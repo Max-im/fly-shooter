@@ -3,6 +3,7 @@ import { Control } from './Control';
 import { Angler1 } from './Enemies/Angler1';
 import { Angler2 } from './Enemies/Angler2';
 import { Enemy } from './Enemies/Enemy';
+import { Lucky } from './Enemies/Lucky';
 import { Player } from './Player';
 import { IDrawable } from './types/Drawable';
 import { UI } from './UI';
@@ -101,8 +102,10 @@ export class Game implements IDrawable {
   }
 
   private addEnemy() {
-    if (Math.random() > 0.5) this.enemies.push(new Angler1(this));
-    else this.enemies.push(new Angler2(this))
+    const enemiesMap = [Lucky, Angler1, Angler2];
+    const randomIndex = Math.floor(Math.random() * (enemiesMap.length - 1));
+    const RandomEnemy =  enemiesMap[randomIndex];
+    this.enemies.push(new RandomEnemy(this));
   }
 
   private checkCollistions(rect1: any, rect2: any): boolean {
