@@ -1,6 +1,7 @@
 import { Game } from "./Game";
+import { IDrawable } from "./types/Drawable";
 
-export class UI {
+export class UI implements IDrawable {
     game: Game;
     fontSize = 25;
     fontFamily = 'Helvetica';

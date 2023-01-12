@@ -1,7 +1,9 @@
 import { Game } from "./Game";
 import { Bullet } from "./Bullet";
+import { IDrawable } from "./types/Drawable";
+import { IUpdatable } from "./types/Updatable";
 
-export class Player {
+export class Player implements IDrawable, IUpdatable{
     game: Game;
     width = 120;
     height = 190;

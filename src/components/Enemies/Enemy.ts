@@ -1,11 +1,15 @@
+import { IDrawable } from "components/types/Drawable";
+import { IUpdatable } from "components/types/Updatable";
 import { Game } from "../Game";
 
-export abstract class Enemy {
+export abstract class Enemy implements IDrawable, IUpdatable {
     game: Game;
     markedForDelete = false;
     speedX: number;
     x: number;
 
+    abstract score: number;
+    abstract lives: number;
     abstract y: number;
     abstract width: number;
     abstract height: number;
@@ -24,5 +28,9 @@ export abstract class Enemy {
     draw() {
         this.game.ctx.fillStyle = 'red';
         this.game.ctx.fillRect(this.x, this.y, this.width, this.height);
+        // this.game.ctx.fillStyle = 'black';
+        // this.game.ctx.font = '20px Helvetica';
+        // this.game.ctx.fillText(this.lives, this.x, this.y);
+        
     }
 }
