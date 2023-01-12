@@ -1,3 +1,4 @@
+import { Background } from './Background';
 import { Control } from './Control';
 import { Angler1 } from './Enemies/Angler1';
 import { Enemy } from './Enemies/Enemy';
@@ -7,7 +8,7 @@ import { UI } from './UI';
 
 export class Game implements IDrawable {
   width = 1024;
-  height = 567;
+  height = 500;
   canvas: HTMLCanvasElement;
   ctx: CanvasRenderingContext2D;
   score = 0;
@@ -16,9 +17,11 @@ export class Game implements IDrawable {
   player: Player;
   control: Control;
   ui: UI;
+  background: Background;
 
   gameTime = 0;
   timeLimit = 5000;
+  speed = 1;
 
   ammo = 20;
   maxAmmo = 50;
@@ -40,6 +43,7 @@ export class Game implements IDrawable {
     this.player = new Player(this);
     this.control = new Control(this);
     this.ui = new UI(this);
+    this.background = new Background(this);
   }
 
   update(deltaTime: number) {
@@ -47,6 +51,7 @@ export class Game implements IDrawable {
     if(this.gameTime > this.timeLimit) this.gameOver = true;
     this.ctx.fillStyle = '#4d79bc';
     this.ctx.fillRect(0, 0, this.width, this.height);
+    this.background.update();
     this.player.update();
     if (this.ammoTimer > this.ammoInterval) {
       if (this.ammo < this.maxAmmo) this.ammo++;
@@ -71,6 +76,7 @@ export class Game implements IDrawable {
                 bullet.markForDelete = true;
             }
         });
+        
     });
 
     this.enemies = this.enemies.filter((enemy) => !enemy.markedForDelete);
@@ -80,12 +86,16 @@ export class Game implements IDrawable {
     } else {
       this.enemyTimer += deltaTime;
     }
+
+    this.background.postUpdate();
   }
 
   draw() {
+    this.background.draw();
     this.player.draw();
     this.ui.draw();
     this.enemies.forEach((enemy) => enemy.draw());
+    this.background.postDraw();
   }
 
   private addEnemy() {
