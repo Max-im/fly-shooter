@@ -2,6 +2,7 @@ import { Background } from './Background';
 import { Control } from './Control';
 import { Angler1 } from './Enemies/Angler1';
 import { Angler2 } from './Enemies/Angler2';
+import { Drone } from './Enemies/Drone';
 import { Enemy } from './Enemies/Enemy';
 import { Lucky } from './Enemies/Lucky';
 import { Player } from './Player';
@@ -105,7 +106,7 @@ export class Game implements IDrawable {
   }
 
   private addEnemy() {
-    const enemiesMap = [Lucky, Angler1, Angler2];
+    const enemiesMap = [Lucky, Angler1, Angler2, Drone];
     const randomIndex = Math.floor(Math.random() * (enemiesMap.length - 1));
     const RandomEnemy =  enemiesMap[randomIndex];
     this.enemies.push(new RandomEnemy(this));
