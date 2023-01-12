@@ -85,7 +85,6 @@ export class Game implements IDrawable {
 
   private addEnemy() {
     this.enemies.push(new Angler1(this));
-    console.log(this.enemies);
   }
 
   private checkCollistions(rect1: any, rect2: any): boolean {

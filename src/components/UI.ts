@@ -25,6 +25,23 @@ export class UI implements IDrawable {
         for(let i = 0; i < this.game.ammo; i++) {
             ctx.fillRect(20 + 5 * i, 50, 3, 20);
         }
+
+        if (this.game.gameOver) {
+            ctx.textAlign = 'center';
+            let title = 'You Lost!';
+            let subtitle = 'Try Again Next Time!';
+            
+            if (this.game.winningScore < this.game.score) {
+                title = 'You Win!'
+                subtitle = 'Well Done!'
+            }
+
+            ctx.fillStyle = 'white';
+            ctx.font = '50px ' + this.fontFamily;
+            ctx.fillText(title, this.game.width * 0.5, this.game.height * 0.5 - 20);
+            ctx.font = '25px ' + this.fontFamily;
+            ctx.fillText(subtitle, this.game.width * 0.5, this.game.height * 0.5 + 20);
+        }
         ctx.restore();
     }
 }
