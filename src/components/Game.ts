@@ -25,6 +25,7 @@ export class Game implements IDrawable {
   enemyInterval = 1000;
   enemyTimer = 0;
 
+  winningScore = 20;
   gameOver = false;
 
   constructor() {
@@ -60,6 +61,7 @@ export class Game implements IDrawable {
                 if (enemy.lives <= 0) {
                     enemy.markedForDelete = true;
                     this.score += enemy.score;
+                    if (this.winningScore < this.score) this.gameOver = true;
                 }
                 bullet.markForDelete = true;
             }
