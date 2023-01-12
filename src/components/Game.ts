@@ -1,14 +1,16 @@
 import { Control } from "./Control";
 import { Player } from "./Player";
+import { UI } from "./UI";
 
 export class Game {
     width = 1024;
     height = 567;
     canvas: HTMLCanvasElement;
     ctx: CanvasRenderingContext2D;
-    player: Player;
     keys: string[] = [];
+    player: Player;
     control: Control;
+    ui: UI;
     ammo = 20;
     maxAmmo = 50;
     ammoTimer = 0;
@@ -22,6 +24,7 @@ export class Game {
 
         this.player = new Player(this);
         this.control = new Control(this);
+        this.ui = new UI(this);
     }
 
     update(deltaTime: number) {
@@ -38,6 +41,7 @@ export class Game {
 
     draw() {
         this.player.draw();
+        this.ui.draw();
     }
 
 
