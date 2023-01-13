@@ -76,5 +76,6 @@ export class Player extends Sprite implements IDrawable {
     onTurbo() {
         this.turbo = true;
         this.turboTimer = 0;
+        if(this.game.ammo< this.game.maxAmmo) this.game.ammo = this.game.maxAmmo;
     }
 }

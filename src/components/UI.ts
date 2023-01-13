@@ -21,7 +21,7 @@ export class UI implements IDrawable {
         ctx.shadowColor = 'black';
         ctx.fillText('Score: ' + this.game.score, 20, 40);
 
-        ctx.fillStyle = this.game.player.powerUp ? this.color : 'white';
+        ctx.fillStyle = this.game.player.turbo ? this.color : 'white';
         for(let i = 0; i < this.game.ammo; i++) {
             ctx.fillRect(20 + 5 * i, 50, 3, 20);
         }
@@ -41,7 +41,7 @@ export class UI implements IDrawable {
             }
 
             ctx.fillStyle = 'white';
-            ctx.font = '50px ' + this.fontFamily;
+            ctx.font = '58px ' + this.fontFamily;
             ctx.fillText(title, this.game.width * 0.5, this.game.height * 0.5 - 30);
             ctx.font = '25px ' + this.fontFamily;
             ctx.fillText(subtitle, this.game.width * 0.5, this.game.height * 0.5 + 30);

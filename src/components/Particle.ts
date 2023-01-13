@@ -18,7 +18,7 @@ export class Particle {
   angle = 0;
   angleVelocity = Math.random() * 0.2 - 0.1;
   bounced = 2;
-  bottomBounceBorder = 100 * Math.random() + 60;
+  bottomBounceBorder = 80 * Math.random() + 60;
 
   constructor(game: Game, x: number, y: number) {
     this.game = game;
