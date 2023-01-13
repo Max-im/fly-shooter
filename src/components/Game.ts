@@ -9,6 +9,7 @@ import { Player } from './Player';
 import { Particle } from './Particle';
 import { IDrawable } from './types/Drawable';
 import { UI } from './UI';
+import { IRect } from './types/Rect';
 
 export class Game implements IDrawable {
   width = 1024;
@@ -125,7 +126,7 @@ export class Game implements IDrawable {
     this.enemies.push(new RandomEnemy(this));
   }
 
-  private checkCollistions(rect1: any, rect2: any): boolean {
+  private checkCollistions(rect1: IRect, rect2: IRect): boolean {
     return (
       rect1.x < rect2.x + rect2.width &&
       rect1.x + rect1.width > rect2.x &&
