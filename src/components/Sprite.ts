@@ -16,7 +16,7 @@ export abstract class Sprite {
         else this.frameX = 0;
     }
 
-    drawSprite() {
+    draw() {
         this.game.ctx.drawImage(
             this.image, 
             this.frameX * this.width,
@@ -28,6 +28,14 @@ export abstract class Sprite {
             this.width, 
             this.height
         );
-        if (this.game.debug) this.game.ctx.strokeRect(this.x, this.y, this.width, this.height);
+        if (this.game.debug) {
+            this.game.ctx.strokeRect(this.x, this.y, this.width, this.height);
+            if ('lives' in this) {
+                this.game.ctx.fillStyle = 'black';
+                this.game.ctx.font = '20px Helvetica';
+                // @ts-ignore
+                this.game.ctx.fillText(this.lives.toString(), this.x, this.y);
+            }
+        }
     }
 }

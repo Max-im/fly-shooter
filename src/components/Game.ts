@@ -11,6 +11,8 @@ import { IDrawable } from './types/Drawable';
 import { UI } from './UI';
 import { IRect } from './types/Rect';
 import { HiveWhale } from './Enemies/HiveWhale';
+import { Explosion } from './Explosion/Explosion';
+import { Bullet } from './Bullet';
 
 export class Game implements IDrawable {
   width = 1024;
@@ -21,6 +23,8 @@ export class Game implements IDrawable {
   keys: string[] = [];
   enemies: Enemy[] = [];
   particles: Particle[] = [];
+  explosions: Explosion[] = [];
+  bullets: Bullet[] = [];
   player: Player;
   control: Control;
   ui: UI;
@@ -35,7 +39,7 @@ export class Game implements IDrawable {
   ammoTimer = 0;
   ammoInterval = 500;
 
-  enemyInterval = 1000;
+  enemyInterval = 1500;
   enemyTimer = 0;
 
   winningScore = 100;
@@ -74,7 +78,7 @@ export class Game implements IDrawable {
         enemy.touch();
         if (this.score < 0) this.gameOver = true;
       }
-      this.player.bullets.forEach((bullet) => {
+      this.bullets.forEach((bullet) => {
         if (this.checkCollistions(bullet, enemy)) {
           enemy.lives--;
           enemy.takeHit();
@@ -98,14 +102,18 @@ export class Game implements IDrawable {
 
     this.particles.forEach((particle) => particle.update());
     this.particles = this.particles.filter((particle) => !particle.markedForDelete);
+    this.explosions.forEach((explosion) => explosion.update(deltaTime));
+    this.explosions = this.explosions.filter((explosion) => !explosion.markedForDelete);
     this.background.postUpdate();
   }
 
   draw() {
     this.background.draw();
     this.player.draw();
+    this.bullets.forEach(bullet => bullet.draw());
     this.enemies.forEach((enemy) => enemy.draw());
     this.particles.forEach((particle) => particle.draw());
+    this.explosions.forEach((explosion) => explosion.draw());
     this.ui.draw();
     this.background.postDraw();
   }

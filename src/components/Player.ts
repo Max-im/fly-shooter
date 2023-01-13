@@ -15,11 +15,10 @@ export class Player extends Sprite implements IDrawable {
     maxFrame = 37;
     speedY = 0;
     maxSpeed = 3;
-    bullets: Bullet[] = [];
     image = <HTMLImageElement>document.getElementById('player');
     turbo = false;
     turboTimer = 0;
-    powerUpLimit = 5000;
+    turboLimit = 5000;
 
     constructor(game: Game) {
         super();
@@ -37,11 +36,11 @@ export class Player extends Sprite implements IDrawable {
         if (this.y > bottomBorder) this.y = bottomBorder; 
         else if (this.y < topBorder) this.y = topBorder; 
         
-        this.bullets.forEach(bullet => bullet.update());
-        this.bullets = this.bullets.filter(bullet => !bullet.markForDelete);
+        this.game.bullets.forEach(bullet => bullet.update());
+        this.game.bullets = this.game.bullets.filter(bullet => !bullet.markForDelete);
         this.updateSprite();
         if (this.turbo) {
-            if (this.turboTimer > this.powerUpLimit) {
+            if (this.turboTimer > this.turboLimit) {
                 this.turboTimer = 0;
                 this.turbo = false;
                 this.frameY = 0
@@ -53,14 +52,9 @@ export class Player extends Sprite implements IDrawable {
         }
     }
 
-    draw() {
-        this.bullets.forEach(bullet => bullet.draw());
-        this.drawSprite();
-    }
-
     shoot() {
         if (this.game.ammo > 0) {
-            this.bullets.push(new Bullet(this.game, this.x + 90, this.y + 33));
+            this.game.bullets.push(new Bullet(this.game, this.x + 90, this.y + 33));
             this.game.ammo--;
         }
         if (this.turbo) this.bottomShoot();
@@ -68,7 +62,7 @@ export class Player extends Sprite implements IDrawable {
 
     private bottomShoot() {
         if (this.game.ammo > 0) {
-            this.bullets.push(new Bullet(this.game, this.x + 90, this.y + 175));
+            this.game.bullets.push(new Bullet(this.game, this.x + 90, this.y + 175));
             this.game.ammo--;
         }
     }

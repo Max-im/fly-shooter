@@ -3,7 +3,8 @@ import { IUpdatable } from "components/types/Updatable";
 import { Game } from "../Game";
 import { Sprite } from "../Sprite";
 import { Particle } from "../Particle";
-
+import { SmokeExplosion } from "../Explosion/SmokeExplosion";
+import { FireExplosion } from "../Explosion/FIreExplosion";
 
 export abstract class Enemy extends Sprite implements IDrawable, IUpdatable {
     game: Game;
@@ -35,28 +36,24 @@ export abstract class Enemy extends Sprite implements IDrawable, IUpdatable {
         this.updateSprite();
     }
 
-    draw() {
-        this.drawSprite();
-        if (this.game.debug) {
-            this.game.ctx.fillStyle = 'black';
-            this.game.ctx.font = '20px Helvetica';
-            this.game.ctx.fillText(this.lives.toString(), this.x, this.y);
-        }
-    }
-
     takeHit() {
         this.game.particles.push(new Particle(this.game, this.x + this.width * 0.5, this.y + this.height * 0.5));
     }
     
     kill() {
         this.markedForDelete = true;
+        // @ts-ignore
+        const explosions = [FireExplosion, SmokeExplosion];
+        const index = Math.floor(Math.random() * explosions.length);
+        const RandomExplosion = explosions[index];
+        this.game.explosions.push((new RandomExplosion(this.game, this.x, this.y)));
         for (let i = 0; i < this.score; i++) {
             this.game.particles.push(new Particle(this.game, this.x + this.width * 0.5, this.y + this.height * 0.5))
         }
     }
 
     touch() {
-        if (!this.game.gameOver) this.game.score -= this.score * 2; 
+        if (!this.game.gameOver) this.game.score -= this.score; 
         this.kill();
     }
 }

@@ -12,6 +12,7 @@ export class Angler2 extends Enemy {
     maxFrame = 37;
     type = 'angler2';
 
+
     constructor(game: Game) {
         super(game);
         this.y = Math.random() * (game.height * 0.95 - this.height);
