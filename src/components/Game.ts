@@ -6,6 +6,7 @@ import { Drone } from './Enemies/Drone';
 import { Enemy } from './Enemies/Enemy';
 import { Lucky } from './Enemies/Lucky';
 import { Player } from './Player';
+import { Particle } from './Particle';
 import { IDrawable } from './types/Drawable';
 import { UI } from './UI';
 
@@ -17,6 +18,7 @@ export class Game implements IDrawable {
   score = 0;
   keys: string[] = [];
   enemies: Enemy[] = [];
+  particles: Particle[] = [];
   player: Player;
   control: Control;
   ui: UI;
@@ -51,39 +53,48 @@ export class Game implements IDrawable {
   }
 
   update(deltaTime: number) {
-    if(!this.gameOver) this.gameTime += deltaTime;
-    if(this.gameTime > this.timeLimit) this.gameOver = true;
+    if (!this.gameOver) this.gameTime += deltaTime;
+    if (this.gameTime > this.timeLimit) this.gameOver = true;
     this.ctx.fillStyle = '#4d79bc';
     this.ctx.fillRect(0, 0, this.width, this.height);
     this.background.update();
     this.player.update(deltaTime);
-    
+
     if (this.ammoTimer > this.ammoInterval) {
       if (this.ammo < this.maxAmmo) this.ammo++;
       this.ammoTimer = 0;
     } else {
       this.ammoTimer += deltaTime;
     }
-    
+
     this.enemies.forEach((enemy) => {
-        enemy.update();
-        if (this.checkCollistions(this.player, enemy)) {
-            enemy.markedForDelete = true;
-            if (enemy.type === 'lucky') this.player.enterPowerUp();
-            else this.score -= enemy.score;
+      enemy.update();
+      if (this.checkCollistions(this.player, enemy)) {
+        enemy.markedForDelete = true;
+        if (enemy.type === 'lucky') this.player.enterPowerUp();
+        if (!this.gameOver) {
+          this.score -= enemy.score;
+          const particleX = enemy.x + enemy.width * 0.5;
+          const particleY = enemy.y + enemy.width * 0.5;
+          this.particles.push(...Particle.generateParticles(this, particleX, particleY, 6));
         }
-        this.player.bullets.forEach(bullet => {
-            if(this.checkCollistions(bullet, enemy)) {
-                enemy.lives--;
-                if (enemy.lives <= 0) {
-                    enemy.markedForDelete = true;
-                    if(!this.gameOver) this.score += enemy.score;
-                    if (this.winningScore < this.score) this.gameOver = true;
-                }
-                bullet.markForDelete = true;
-            }
-        });
-        
+        if (this.score < 0) this.gameOver = true;
+      }
+      this.player.bullets.forEach((bullet) => {
+        if (this.checkCollistions(bullet, enemy)) {
+          enemy.lives--;
+          const particleX = enemy.x + enemy.width * 0.5;
+          const particleY = enemy.y + enemy.width * 0.5;
+          this.particles.push(...Particle.generateParticles(this, particleX, particleY));
+          if (enemy.lives <= 0) {
+            enemy.markedForDelete = true;
+            this.particles.push(...Particle.generateParticles(this, particleX, particleY, 4));
+            if (!this.gameOver) this.score += enemy.score;
+            if (this.winningScore < this.score) this.gameOver = true;
+          }
+          bullet.markForDelete = true;
+        }
+      });
     });
 
     this.enemies = this.enemies.filter((enemy) => !enemy.markedForDelete);
@@ -94,6 +105,8 @@ export class Game implements IDrawable {
       this.enemyTimer += deltaTime;
     }
 
+    this.particles.forEach((particle) => particle.update());
+    this.particles = this.particles.filter((particle) => !particle.markedForDelete);
     this.background.postUpdate();
   }
 
@@ -101,6 +114,7 @@ export class Game implements IDrawable {
     this.background.draw();
     this.player.draw();
     this.enemies.forEach((enemy) => enemy.draw());
+    this.particles.forEach((particle) => particle.draw());
     this.ui.draw();
     this.background.postDraw();
   }
@@ -108,7 +122,7 @@ export class Game implements IDrawable {
   private addEnemy() {
     const enemiesMap = [Lucky, Angler1, Angler2, Drone];
     const randomIndex = Math.floor(Math.random() * (enemiesMap.length - 1));
-    const RandomEnemy =  enemiesMap[randomIndex];
+    const RandomEnemy = enemiesMap[randomIndex];
     this.enemies.push(new RandomEnemy(this));
   }
 
