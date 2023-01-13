@@ -5,7 +5,7 @@ export class Lucky extends Enemy {
     y: number;
     width = 99;
     height = 95;
-    score = 3;
+    score = 0;
     lives = 3;
     image = <HTMLImageElement>document.getElementById('lucky');
     frameY = Math.floor(Math.random() * 2);

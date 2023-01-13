@@ -70,7 +70,7 @@ export class Game implements IDrawable {
         if (this.checkCollistions(this.player, enemy)) {
             enemy.markedForDelete = true;
             if (enemy.type === 'lucky') this.player.enterPowerUp();
-            else this.score--;
+            else this.score -= enemy.score;
         }
         this.player.bullets.forEach(bullet => {
             if(this.checkCollistions(bullet, enemy)) {
