@@ -10,6 +10,7 @@ import { Particle } from './Particle';
 import { IDrawable } from './types/Drawable';
 import { UI } from './UI';
 import { IRect } from './types/Rect';
+import { HiveWhale } from './Enemies/HiveWhale';
 
 export class Game implements IDrawable {
   width = 1024;
@@ -70,9 +71,7 @@ export class Game implements IDrawable {
     this.enemies.forEach((enemy) => {
       enemy.update();
       if (this.checkCollistions(this.player, enemy)) {
-        enemy.kill();
-        if (enemy.type === 'lucky') this.player.onTurbo();
-        if (!this.gameOver) this.score -= enemy.score;
+        enemy.touch();
         if (this.score < 0) this.gameOver = true;
       }
       this.player.bullets.forEach((bullet) => {
@@ -112,8 +111,8 @@ export class Game implements IDrawable {
   }
 
   private addEnemy() {
-    const enemiesMap = [Lucky, Angler1, Angler2, Drone, Angler1, Angler2, Drone];
-    const randomIndex = Math.floor(Math.random() * (enemiesMap.length - 1));
+    const enemiesMap = [Lucky, Angler1, Angler2, HiveWhale];
+    const randomIndex = Math.floor(Math.random() * (enemiesMap.length));
     const RandomEnemy = enemiesMap[randomIndex];
     this.enemies.push(new RandomEnemy(this));
   }

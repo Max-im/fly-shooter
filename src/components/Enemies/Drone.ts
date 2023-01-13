@@ -11,9 +11,11 @@ export class Drone extends Enemy {
     frameY = Math.floor(Math.random() * 2);
     maxFrame = 39;
     type = 'drone';
+    speedX = Math.random() * -4.2 - 0.5;
 
-    constructor(game: Game) {
+    constructor(game: Game, x: number, y: number) {
         super(game);
-        this.y = Math.random() * (game.height * 0.9 - this.height);
+        this.x = x;
+        this.y = y;
     }
 }

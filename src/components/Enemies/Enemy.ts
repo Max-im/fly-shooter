@@ -54,4 +54,9 @@ export abstract class Enemy extends Sprite implements IDrawable, IUpdatable {
             this.game.particles.push(new Particle(this.game, this.x + this.width * 0.5, this.y + this.height * 0.5))
         }
     }
+
+    touch() {
+        if (!this.game.gameOver) this.game.score -= this.score * 2; 
+        this.kill();
+    }
 }

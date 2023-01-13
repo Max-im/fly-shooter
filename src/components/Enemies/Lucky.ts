@@ -16,4 +16,9 @@ export class Lucky extends Enemy {
         super(game);
         this.y = Math.random() * (game.height * 0.9 - this.height);
     }
+
+
+    touch() {
+        this.game.player.onTurbo();
+    }
 }

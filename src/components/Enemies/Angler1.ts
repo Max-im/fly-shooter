@@ -14,6 +14,6 @@ export class Angler1 extends Enemy {
 
     constructor(game: Game) {
         super(game);
-        this.y = Math.random() * (game.height * 0.9 - this.height);
+        this.y = Math.random() * (game.height * 0.95- this.height);
     }
 }

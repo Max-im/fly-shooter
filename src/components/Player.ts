@@ -44,7 +44,7 @@ export class Player extends Sprite implements IDrawable {
             if (this.turboTimer > this.powerUpLimit) {
                 this.turboTimer = 0;
                 this.turbo = false;
-                this.frameX = 0
+                this.frameY = 0
             } else {
                 this.turboTimer += deltaTime;
                 this.frameY = 1;
