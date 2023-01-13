@@ -37,7 +37,7 @@ export class Game implements IDrawable {
   enemyInterval = 1000;
   enemyTimer = 0;
 
-  winningScore = 20;
+  winningScore = 100;
   gameOver = false;
 
   constructor() {
@@ -112,7 +112,7 @@ export class Game implements IDrawable {
   }
 
   private addEnemy() {
-    const enemiesMap = [Lucky, Angler1, Angler2, Drone];
+    const enemiesMap = [Lucky, Angler1, Angler2, Drone, Angler1, Angler2, Drone];
     const randomIndex = Math.floor(Math.random() * (enemiesMap.length - 1));
     const RandomEnemy = enemiesMap[randomIndex];
     this.enemies.push(new RandomEnemy(this));
