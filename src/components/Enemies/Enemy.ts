@@ -2,6 +2,7 @@ import { IDrawable } from "components/types/Drawable";
 import { IUpdatable } from "components/types/Updatable";
 import { Game } from "../Game";
 import { Sprite } from "../Sprite";
+import { Particle } from "../Particle";
 
 
 export abstract class Enemy extends Sprite implements IDrawable, IUpdatable {
@@ -41,6 +42,16 @@ export abstract class Enemy extends Sprite implements IDrawable, IUpdatable {
             this.game.ctx.font = '20px Helvetica';
             this.game.ctx.fillText(this.lives.toString(), this.x, this.y);
         }
-        
+    }
+
+    takeHit() {
+        this.game.particles.push(new Particle(this.game, this.x + this.width * 0.5, this.y + this.height * 0.5));
+    }
+    
+    kill() {
+        this.markedForDelete = true;
+        for (let i = 0; i < this.score; i++) {
+            this.game.particles.push(new Particle(this.game, this.x + this.width * 0.5, this.y + this.height * 0.5))
+        }
     }
 }

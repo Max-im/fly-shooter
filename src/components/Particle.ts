@@ -57,12 +57,4 @@ export class Particle {
     );
     this.game.ctx.restore();
   }
-
-  static generateParticles(game: Game, x: number, y: number, amount: number = 1) {
-    const particlesList = [];
-    for (let i = 0; i < amount; i++) {
-      particlesList.push(new Particle(game, x, y));
-    }
-    return particlesList;
-  }
 }

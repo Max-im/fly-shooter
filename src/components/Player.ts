@@ -17,8 +17,8 @@ export class Player extends Sprite implements IDrawable {
     maxSpeed = 3;
     bullets: Bullet[] = [];
     image = <HTMLImageElement>document.getElementById('player');
-    powerUp = false;
-    powerUpTimer = 0;
+    turbo = false;
+    turboTimer = 0;
     powerUpLimit = 5000;
 
     constructor(game: Game) {
@@ -40,13 +40,13 @@ export class Player extends Sprite implements IDrawable {
         this.bullets.forEach(bullet => bullet.update());
         this.bullets = this.bullets.filter(bullet => !bullet.markForDelete);
         this.updateSprite();
-        if (this.powerUp) {
-            if (this.powerUpTimer > this.powerUpLimit) {
-                this.powerUpTimer = 0;
-                this.powerUp = false;
+        if (this.turbo) {
+            if (this.turboTimer > this.powerUpLimit) {
+                this.turboTimer = 0;
+                this.turbo = false;
                 this.frameX = 0
             } else {
-                this.powerUpTimer += deltaTime;
+                this.turboTimer += deltaTime;
                 this.frameY = 1;
                 this.game.ammo += 0.1;
             }
@@ -63,7 +63,7 @@ export class Player extends Sprite implements IDrawable {
             this.bullets.push(new Bullet(this.game, this.x + 90, this.y + 33));
             this.game.ammo--;
         }
-        if (this.powerUp) this.bottomShoot();
+        if (this.turbo) this.bottomShoot();
     }
 
     private bottomShoot() {
@@ -73,8 +73,8 @@ export class Player extends Sprite implements IDrawable {
         }
     }
 
-    enterPowerUp() {
-        this.powerUp = true;
-        this.powerUpTimer = 0;
+    onTurbo() {
+        this.turbo = true;
+        this.turboTimer = 0;
     }
 }

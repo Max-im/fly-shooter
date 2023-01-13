@@ -70,25 +70,17 @@ export class Game implements IDrawable {
     this.enemies.forEach((enemy) => {
       enemy.update();
       if (this.checkCollistions(this.player, enemy)) {
-        enemy.markedForDelete = true;
-        if (enemy.type === 'lucky') this.player.enterPowerUp();
-        if (!this.gameOver) {
-          this.score -= enemy.score;
-          const particleX = enemy.x + enemy.width * 0.5;
-          const particleY = enemy.y + enemy.width * 0.5;
-          this.particles.push(...Particle.generateParticles(this, particleX, particleY, 6));
-        }
+        enemy.kill();
+        if (enemy.type === 'lucky') this.player.onTurbo();
+        if (!this.gameOver) this.score -= enemy.score;
         if (this.score < 0) this.gameOver = true;
       }
       this.player.bullets.forEach((bullet) => {
         if (this.checkCollistions(bullet, enemy)) {
           enemy.lives--;
-          const particleX = enemy.x + enemy.width * 0.5;
-          const particleY = enemy.y + enemy.width * 0.5;
-          this.particles.push(...Particle.generateParticles(this, particleX, particleY));
+          enemy.takeHit();
           if (enemy.lives <= 0) {
-            enemy.markedForDelete = true;
-            this.particles.push(...Particle.generateParticles(this, particleX, particleY, 4));
+            enemy.kill();
             if (!this.gameOver) this.score += enemy.score;
             if (this.winningScore < this.score) this.gameOver = true;
           }
