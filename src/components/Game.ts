@@ -25,8 +25,7 @@ export class Game implements IDrawable {
   background: Background;
   debug = false;
 
-  gameTime = 0;
-  timeLimit = 5000000;
+  gameTime = 60000; // 1 min
   speed = 1;
 
   ammo = 20;
@@ -53,8 +52,8 @@ export class Game implements IDrawable {
   }
 
   update(deltaTime: number) {
-    if (!this.gameOver) this.gameTime += deltaTime;
-    if (this.gameTime > this.timeLimit) this.gameOver = true;
+    if (!this.gameOver) this.gameTime -= deltaTime;
+    if (this.gameTime < 0) this.gameOver = true;
     this.ctx.fillStyle = '#4d79bc';
     this.ctx.fillRect(0, 0, this.width, this.height);
     this.background.update();

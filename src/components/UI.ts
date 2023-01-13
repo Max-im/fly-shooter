@@ -28,7 +28,7 @@ export class UI implements IDrawable {
 
         ctx.fillStyle = 'white';
         const formattedTime = (this.game.gameTime * 0.001).toFixed(1);
-        ctx.fillText('Timer: ' + formattedTime, 20, 100);
+        ctx.fillText('Time left: ' + formattedTime, 20, 100);
 
         if (this.game.gameOver) {
             ctx.textAlign = 'center';
