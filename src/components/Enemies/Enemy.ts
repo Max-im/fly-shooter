@@ -37,6 +37,7 @@ export abstract class Enemy extends Sprite implements IDrawable, IUpdatable {
     }
 
     takeHit() {
+        this.lives--;
         this.game.particles.push(new Particle(this.game, this.x + this.width * 0.5, this.y + this.height * 0.5));
     }
     

@@ -80,7 +80,6 @@ export class Game implements IDrawable {
       }
       this.bullets.forEach((bullet) => {
         if (this.checkCollistions(bullet, enemy)) {
-          enemy.lives--;
           enemy.takeHit();
           if (enemy.lives <= 0) {
             enemy.kill();
