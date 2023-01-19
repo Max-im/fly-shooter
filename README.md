@@ -1,6 +1,6 @@
 # Fly Shooter Game
 
-## Fighting Game with TypeScript and HTML canvas
+## Shooter Game with TypeScript and HTML canvas
 
 ## Tech:
 - TypeScript
