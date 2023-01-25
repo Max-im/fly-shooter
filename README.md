@@ -7,7 +7,7 @@
 - Canvas
 
 ## Play now
-[Play](https://max-im.github.io/fly-shooter)
+[Play](https://max-im.github.io/fly-shooter){:target="_blank"}
 
 ## Running:
 - clone the repo
