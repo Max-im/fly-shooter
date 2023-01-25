@@ -6,6 +6,9 @@
 - TypeScript
 - Canvas
 
+## Play now
+[Play](max-im.github.io/fly-shooter/).
+
 ## Running:
 - clone the repo
 - go to the project dir `cd fly-shooter`
